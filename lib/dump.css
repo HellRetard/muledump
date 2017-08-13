@@ -1,10 +1,15 @@
+@font-face {
+    font-family: profont;
+    src: url(font.ttf);
+}
 body {
-	background: #363636;
-	color: #b3b3b3;
+	background: #555;
+	color: #cacaca;
 	padding: 10px;
 	margin: 0;
 	cursor: default;
-	font: 12px Arial,sans-serif;
+	font-size: 12px;
+	font-family: profont;
 }
 
 #cnt {
@@ -19,15 +24,16 @@ body {
 
 #top {
 	font-size: 15px;
-	margin: 0 3px;
-	text-align: right;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
 }
 
 #top > div, #top > a {
-	display: inline-block;
 	cursor: pointer;
-	border: 2px solid #555;
+	border: 1px solid #484848;
 	padding: 0 4px;
+	transition: 0.333s;
 }
 #top > a { color: inherit; text-decoration: none; }
 
@@ -53,6 +59,13 @@ body {
 .menu input { float: left; clear: left; margin: 4px;  }
 .menu label {display: block; padding: 2px; }
 
+.button {
+	font-size: 15px;
+	float: right;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
 .menu label:hover,
 .menu input:hover ~ label,
 #export div:hover,
@@ -61,19 +74,36 @@ body {
     color: #fff;
 }
 
+#top > div:hover {
+	color: rgb(255, 0, 119);
+}
+
 .menu div>div>div { padding-left: 15px; }
 
 #export { width: auto; text-align: center; }
 #export div { padding: 0 5px; }
 
-#totals, .mule, .guid, .reload, .item { display: inline-block; }
+#totals, .mule, .guid, .reload, .item { 
+	display: inline-block;
+}
+
+#totals, .mule, .guid, .reload {
+	box-shadow: 0 0 7px black;
+	border-radius: 2px;
+	background: #333;
+}
 
 #totals {
-	margin: 10px 3px;
-	border: solid 2px #555;
 	line-height: 0;
-	max-width: 528px;
+	max-width: 792px;
 	padding: 5px;
+	background: transparent;
+	box-shadow: none;
+}
+
+#totals > .item {
+	box-shadow: 0 0 2px #222;
+	background: url(renders.png) #484848;
 }
 
 #errors {
@@ -88,7 +118,6 @@ body {
 .mule {
 	padding: 2px;
 	margin: 3px;
-	border: solid 2px #555;
 	min-width: 184px;
 }
 
@@ -100,35 +129,44 @@ body {
 	width: 100%;
 }
 
-.name, .error, .reload, #counter { font-weight: bold; }
+.name, .error, .reload, #counter { font-weight: bolder; }
 
 .name {
+	color: white;
 	font-size: 16px;
-	margin: 4px;
-	text-align: center;
-	cursor: pointer;
-	overflow: hidden;
+	text-align: left;
+	display: inline-block;
 }
 
-.button {
-	display: inline-block;
-	float: right;
-	width: 18px;
-	height: 18px;
-	line-height: 18px;
-	vertical-align: middle;
-	text-align: center;
-	font-size: 16px;
-	color: white;
-	background-color: #545454;
-	cursor: pointer;
-	overflow: hidden;
-	margin: 4px 2px;
-	text-decoration: none;
+.totals {
+	display: none;
+	position: absolute;
+	padding: 0.5em;
+	margin-left: 0.5em;
+	border: 2px solid #444;
+	border-radius: 10px;
+	background: linear-gradient(#222,#111);
+	z-index: 50;
+	font-family: courier;
+}
+
+.totals > hr {
+	height: 1px;
+	width: 101%;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.totals > div > span {
+	width: 25%;
+	float: left;
+}
+
+.name:hover .totals {
+	display: inline;
 }
 
 .portrait {
-	float: left;
 	width: 22px;
 	height: 22px;
 	margin: 4px 6px 0 4px;
@@ -141,13 +179,50 @@ hr {
 	height: 2px;
 }
 
-.stats, .pcstats, .chdesc {
-	width: 180px;
-	margin: 4px 0;
-}
-
 .chdesc {
 	white-space: nowrap;
+	text-align: center;
+}
+.chdesc > .addons {
+	display: none;
+	margin: -63px -1px;
+	width: 179px;
+	background: linear-gradient(to top, #111, #222);
+	border: 1px solid #222;
+	border-bottom: 0;
+	position: absolute;
+	text-shadow: 2px 2px 4px black; 
+}
+.addons > .level {
+	color: white;
+}
+.addons > .xp {
+	color: gray;
+}
+.addons > .xp2 {
+}
+.fame:hover + .addons {
+	display: block;
+}
+.chdesc > .fame {
+	color: #ffd700;
+	outline: 1px solid #151515;
+	background: #0a0a0a;
+}
+.chdesc > .fame:hover {
+	background: #111;
+}
+.chdesc > .xp{
+	color: #AAA;
+	font-size: 10px;
+}
+.chdesc > .xp2 {
+	color: #888;
+	font-size: 10px;
+}
+.char {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .stats td {
@@ -156,8 +231,13 @@ hr {
 }
 
 .stats td.sname {
+	color: white;
 	text-align: right;
 	padding: 0 5px 0 0;
+}
+
+.stat {
+	font-weight: 100;
 }
 
 .stat.avg { /*color: #73cce2;*/ }
@@ -174,24 +254,27 @@ hr {
 }
 
 .itemsc {
-	width: 176px;
-	margin: 2px;
+	width: 180px;
 	padding: 0;
-	overflow: hidden;
+	margin: 0;
+	margin-bottom: 6px;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
 }
 
 .item {
 	position: relative;
 	width: 40px;
 	height: 40px;
-	margin: 2px;
 	background: url(renders.png) #545454;
 	overflow: hidden;
+	margin: 2px;
 }
 
 .item.selected {
-	background-color: #ffcd57;
-	outline: 2px solid #fefe8e;
+	background-color: #ccf !important;
+	outline: 2px dashed #22f;
 	outline-offset: -1px;
 }
 
@@ -201,7 +284,7 @@ hr {
 	right: 4px;
 	bottom: 1px;
 	color: white;
-	font: bold 15px Arial,sans-serif;
+	font: bolder 15px Arial,sans-serif;
 	text-shadow: -1px 0 3px black, 0 1px 3px black, 1px 0 3px black, 0 -1px 3px black;
 }
 
@@ -213,70 +296,63 @@ hr {
 	color: white;
 }
 
-/*hp and mp */
-.hp{
-	background-color: #545454;
-	background-image: url(hp.png);
-	background-position: 22px 2px;
-	background-repeat: no-repeat;
-	color: white;
-	float: left;
-	font: bold 15px/20px Arial, sans-serif;
-	height: 20px;
-	margin: 0 2px 4px 4px;
-	padding: 2px 2px 2px 17px;
-	text-align: center;
-	text-shadow: -1px 0px 1px black, 1px 0px 1px black, 0px -1px 1px black, 0px 1px 1px black;
-	width: 65px;
-}
-
-.mp{
-	background-color: #545454;
-	background-image: url(mp.png);
-	background-position: 22px 2px;
-	background-repeat: no-repeat;
-	color: white;
-	float: right;
-	font: bold 15px/20px Arial, sans-serif;
-	height: 20px;
-	margin: 0 4px 4px 2px;
-	padding: 2px 2px 2px 17px;
-	text-align: center;
-	text-shadow: -1px 0px 1px black, 1px 0px 1px black, 0px -1px 1px black, 0px 1px 1px black;
-	width: 65px;
-}
-
 /* achievements etc */
 .pcstats {
 	overflow: hidden;
 }
 
-.pcstats td {
-	padding: 0;
-	line-height: 1.1em;
-	text-align: right;
-	overflow: hidden;
-	max-width: 110px;
+.stats, .pcstats, .chdesc {
+	width: 180px;
 }
 
-.pcstats .goal {
-	text-align: left;
+.pcstats > div {
+	margin: 0 auto;
+	width: 96%;
+	background: rgba(0,0,0,0.2);
+}
+
+.pcstats > div:nth-of-type(2n) {
+	background: rgba(0,0,0,0.4) !important;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+}
+
+.pcstats > div > div > span:nth-child(2) {
+	padding-right: 2px;
+}
+
+.dungeon {
+	color: #5f5;
+}
+
+.no-dungeon {
+	color: darkslategrey;
+}
+
+.pcstats > div > div:nth-of-type(2n+1) {
+	background: rgba(0,0,5,0.2);
+}
+
+.pcstats > div > div:hover {
+	background: rgba(20,20,50,0.35);
+}
+.pcstats > div > div:hover > span:nth-child(2){
+	padding-right: 4px;
+	font-weight: bold;
 }
 
 .pcstats .goal .bonus {
-	white-space: nowrap;
 	font-weight: normal;
 	padding: 0;
 }
 
-.pcstats .pcstat, .pcstats .bonus, .pcstats .info {
-	text-align: left;
-	font-weight: bold;
-	padding-left: 5px;
+.goal {
+	color: white;
 }
 
 .pcstats .pcstat { color: #57AD62; }
 .pcstats .bonus { color: #FFC800; }
+.pcstats .info { color: white; }
 
 .mule.disabled { opacity: 0.5; }
 
@@ -284,23 +360,10 @@ hr {
 	margin: 0;
 	padding: 2px;
 	border-spacing: 0;
-	width: 100%;
 }
 td.cont {
-	vertical-align: top;
 	text-align: center;
 	padding: 0;
-}
-td.cont > div {
-	text-align: left;
-	display: inline-block;
-}
-
-.giftchest .itemsc {
-	background-color: #8b4513;
-	margin-left: 0;
-	margin-right: 0;
-	padding: 2px;
 }
 
 .giftchest .item {
@@ -309,13 +372,9 @@ td.cont > div {
 
 /* stars */
 .scont {
-	background-color: #222;
-	border-radius: 6px;
 	float: left;
 	padding: 1px 1px 1px 4px;
-	font-weight: normal;
 	font-size: 14px;
-	margin: 4px 2px;
 }
 .scont .star {
 	font-size: 1.2em;
