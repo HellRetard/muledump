@@ -1,6 +1,7 @@
 accounts = {
 
-'yourbad@mail.sex': 'yourweakpassword',
+'mail1': 'password',
+'mail2': 'password',
 
 }
 
